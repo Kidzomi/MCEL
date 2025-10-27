@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCEL - Middle Corridor Express Logistics</title>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e3d72;
+            --secondary: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 90, 160, 0.8), rgba(30, 61, 114, 0.8)), url('https://images.pexels.com/photos/93398/pexels-photo-93398.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #e55a2b;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Routes */
+        .routes-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .route-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .route-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .team-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card .position {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group select {
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">MCEL</div>
+                <ul class="nav-links">
+                    <li><a href="#about" data-i18n="nav.about">О нас</a></li>
+                    <li><a href="#services" data-i18n="nav.services">Услуги</a></li>
+                    <li><a href="#routes" data-i18n="nav.routes">Маршруты</a></li>
+                    <li><a href="#team" data-i18n="nav.team">Команда</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Контакты</a></li>
+                </ul>
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ka">KA</button>
+                </div>
+                <div class="mobile-menu">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 data-i18n="hero.title">Надежные логистические решения на Кавказе</h1>
+            <p data-i18n="hero.subtitle">Быстрые и безопасные грузоперевозки между Грузией, Арменией и Азербайджаном</p>
+            <a href="#contact" class="cta-button" data-i18n="hero.cta">Связаться с нами</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="about.title">О компании MCEL</h2>
+                <p data-i18n="about.subtitle">Ваш надежный партнер в логистике с 2022 года</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 data-i18n="about.vision">Наше видение</h3>
+                    <p data-i18n="about.description">Middle Corridor Express Logistics (MCEL) — грузинская логистическая компания с офисом в Поти. Мы специализируемся на организации грузоперевозок между Грузией, Арменией и Азербайджаном, обеспечивая скорость, сохранность груза и прозрачность работы.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">8</div>
+                            <div data-i18n="about.trucks">грузовых автомобилей</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">3</div>
+                            <div data-i18n="about.countries">страны работы</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">20+</div>
+                            <div data-i18n="about.tons">тонн груза</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.pexels.com/photos/18446790/pexels-photo-18446790.jpeg" alt="MCEL Trucks" style="width: 100%; border-radius: 10px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="services.title">Наши услуги</h2>
+                <p data-i18n="services.subtitle">Комплексные логистические решения для вашего бизнеса</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚛</div>
+                    <h3 data-i18n="services.containers.title">Контейнерные перевозки</h3>
+                    <p data-i18n="services.containers.description">20-футовые и 40-футовые контейнеры с полным сопровождением</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3 data-i18n="services.express.title">Экспресс-доставка</h3>
+                    <p data-i18n="services.express.description">Срочные перевозки по фиксированным маршрутам</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚠️</div>
+                    <h3 data-i18n="services.dangerous.title">Опасные грузы</h3>
+                    <p data-i18n="services.dangerous.description">Перевозка ADR грузов с полным соблюдением стандартов</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Routes Section -->
+    <section id="routes">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="routes.title">Наши маршруты</h2>
+                <p data-i18n="routes.subtitle">Регулярные рейсы по основным направлениям</p>
+            </div>
+            <div class="routes-container">
+                <div class="route-item">
+                    <span data-i18n="routes.georgia_armenia">Грузия → Армения</span>
+                    <span>📦 🚛</span>
+                </div>
+                <div class="route-item">
+                    <span data-i18n="routes.armenia_georgia">Армения → Грузия</span>
+                    <span>📦 🚛</span>
+                </div>
+                <div class="route-item">
+                    <span data-i18n="routes.georgia_azerbaijan">Грузия → Азербайджан</span>
+                    <span>📦 🚛</span>
+                </div>
+                <div class="route-item">
+                    <span data-i18n="routes.azerbaijan_georgia">Азербайджан → Грузия</span>
+                    <span>📦 🚛</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="team.title">Наша команда</h2>
+                <p data-i18n="team.subtitle">Профессионалы с многолетним опытом</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <h4>Irakli Babilua</h4>
+                    <div class="position" data-i18n="team.director">Директор</div>
+                    <p data-i18n="team.director_desc">Основатель компании, управление тарифами и стратегическое развитие</p>
+                    <div class="contact">+995 574 225 777</div>
+                </div>
+                <div class="team-card">
+                    <h4>Giorgi Pirtskhalava</h4>
+                    <div class="position" data-i18n="team.manager">Главный менеджер</div>
+                    <p data-i18n="team.manager_desc">Оформление документов, таможня, координация перевозок, финансы</p>
+                    <div class="contact">+995 568 902 929</div>
+                </div>
+                <div class="team-card">
+                    <h4>Davit Nasaraia</h4>
+                    <div class="position" data-i18n="team.assistant">Помощник менеджера</div>
+                    <p data-i18n="team.assistant_desc">Техническое состояние автопарка, сопровождение водителей, оформление авто</p>
+                    <div class="contact">+995 551 595 888</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="contact.title">Контакты</h2>
+                <p data-i18n="contact.subtitle">Свяжитесь с нами для расчета стоимости перевозки</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 data-i18n="contact.info">Контактная информация</h3>
+                    <div class="contact-item">
+                        <strong data-i18n="contact.address">Адрес:</strong>
+                        <p data-i18n="contact.address_full">Грузия, г. Поти, 4400, ул. Агмашенебели, №47, 2-й этаж</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong data-i18n="contact.hours">Часы работы:</strong>
+                        <p data-i18n="contact.hours_full">Пн-Пт: 9:00-18:00, Сб: 10:00-15:00</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong data-i18n="contact.clients">Наши клиенты:</strong>
+                        <p>Baku Electronics LLC, ABC Telekom LLC, Zig-Zag LLC</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3 data-i18n="contact.form_title">Отправить запрос</h3>
+                    <form action="https://formspree.io/f/mgvpvzrk" method="POST" id="contactForm">
+                        <div class="form-group">
+                            <label for="name" data-i18n="contact.name">Имя:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" data-i18n="contact.phone">Телефон:</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Компания:</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        <div class="form-group">
+                            <label for="route">Маршрут:</label>
+                            <select id="route" name="route">
+                                <option value="">Выберите маршрут</option>
+                                <option value="Грузия-Армения">Грузия → Армения</option>
+                                <option value="Армения-Грузия">Армения → Грузия</option>
+                                <option value="Грузия-Азербайджан">Грузия → Азербайджан</option>
+                                <option value="Азербайджан-Грузия">Азербайджан → Грузия</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cargo_type">Тип груза:</label>
+                            <select id="cargo_type" name="cargo_type">
+                                <option value="">Выберите тип груза</option>
+                                <option value="20ft">20-футовый контейнер</option>
+                                <option value="40ft">40-футовый контейнер</option>
+                                <option value="heavy">Тяжелый груз</option>
+                                <option value="dangerous">Опасный груз (ADR)</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-i18n="contact.message">Сообщение:</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Опишите ваш груз, вес, сроки доставки..."></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" data-i18n="contact.send">Отправить запрос</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>MCEL</h3>
+                    <p data-i18n="footer.description">Ваш надежный логистический партнер на Кавказе</p>
+                </div>
+                <div>
+                    <h3 data-i18n="footer.quick_links">Быстрые ссылки</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#about" style="color: white; text-decoration: none;" data-i18n="nav.about">О нас</a></li>
+                        <li><a href="#services" style="color: white; text-decoration: none;" data-i18n="nav.services">Услуги</a></li>
+                        <li><a href="#contact" style="color: white; text-decoration: none;" data-i18n="nav.contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="footer.contact">Контакты</h3>
+                    <p>+995 574 225 777</p>
+                    <p data-i18n="contact.address_full">Грузия, г. Поти, 4400, ул. Агмашенебели, №47, 2-й этаж</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MCEL - Middle Corridor Express Logistics. <span data-i18n="footer.rights">Все права защищены.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        const translations = {
+            ru: {
+                'nav.about': 'О нас',
+                'nav.services': 'Услуги',
+                'nav.routes': 'Маршруты',
+                'nav.team': 'Команда',
+                'nav.contact': 'Контакты',
+                'hero.title': 'Надежные логистические решения на Кавказе',
+                'hero.subtitle': 'Быстрые и безопасные грузоперевозки между Грузией, Арменией и Азербайджаном',
+                'hero.cta': 'Связаться с нами',
+                'about.title': 'О компании MCEL',
+                'about.subtitle': 'Ваш надежный партнер в логистике с 2022 года',
+                'about.vision': 'Наше видение',
+                'about.description': 'Middle Corridor Express Logistics (MCEL) — грузинская логистическая компания с офисом в Поти. Мы специализируемся на организации грузоперевозок между Грузией, Арменией и Азербайджаном, обеспечивая скорость, сохранность груза и прозрачность работы.',
+                'about.trucks': 'грузовых автомобилей',
+                'about.countries': 'страны работы',
+                'about.tons': 'тонн груза',
+                'services.title': 'Наши услуги',
+                'services.subtitle': 'Комплексные логистические решения для вашего бизнеса',
+                'services.containers.title': 'Контейнерные перевозки',
+                'services.containers.description': '20-футовые и 40-футовые контейнеры с полным сопровождением',
+                'services.express.title': 'Экспресс-доставка',
+                'services.express.description': 'Срочные перевозки по фиксированным маршрутам',
+                'services.dangerous.title': 'Опасные грузы',
+                'services.dangerous.description': 'Перевозка ADR грузов с полным соблюдением стандартов',
+                'routes.title': 'Наши маршруты',
+                'routes.subtitle': 'Регулярные рейсы по основным направлениям',
+                'routes.georgia_armenia': 'Грузия → Армения',
+                'routes.armenia_georgia': 'Армения → Грузия',
+                'routes.georgia_azerbaijan': 'Грузия → Азербайджан',
+                'routes.azerbaijan_georgia': 'Азербайджан → Грузия',
+                'team.title': 'Наша команда',
+                'team.subtitle': 'Профессионалы с многолетним опытом',
+                'team.director': 'Директор',
+                'team.director_desc': 'Основатель компании, управление тарифами и стратегическое развитие',
+                'team.manager': 'Главный менеджер',
+                'team.manager_desc': 'Оформление документов, таможня, координация перевозок, финансы',
+                'team.assistant': 'Помощник менеджера',
+                'team.assistant_desc': 'Техническое состояние автопарка, сопровождение водителей, оформление авто',
+                'contact.title': 'Контакты',
+                'contact.subtitle': 'Свяжитесь с нами для расчета стоимости перевозки',
+                'contact.info': 'Контактная информация',
+                'contact.address': 'Адрес:',
+                'contact.address_full': 'Грузия, г. Поти, 4400, ул. Агмашенебели, №47, 2-й этаж',
+                'contact.hours': 'Часы работы:',
+                'contact.hours_full': 'Пн-Пт: 9:00-18:00, Сб: 10:00-15:00',
+                'contact.clients': 'Наши клиенты:',
+                'contact.form_title': 'Отправить запрос',
+                'contact.name': 'Имя:',
+                'contact.phone': 'Телефон:',
+                'contact.message': 'Сообщение:',
+                'contact.send': 'Отправить запрос',
+                'footer.description': 'Ваш надежный логистический партнер на Кавказе',
+                'footer.quick_links': 'Быстрые ссылки',
+                'footer.contact': 'Контакты',
+                'footer.rights': 'Все права защищены.'
+            },
+            en: {
+                'nav.about': 'About',
+                'nav.services': 'Services',
+                'nav.routes': 'Routes',
+                'nav.team': 'Team',
+                'nav.contact': 'Contact',
+                'hero.title': 'Reliable Logistics Solutions in the Caucasus',
+                'hero.subtitle': 'Fast and secure cargo transportation between Georgia, Armenia and Azerbaijan',
+                'hero.cta': 'Contact Us',
+                'about.title': 'About MCEL',
+                'about.subtitle': 'Your reliable logistics partner since 2022',
+                'about.vision': 'Our Vision',
+                'about.description': 'Middle Corridor Express Logistics (MCEL) is a Georgian logistics company with an office in Poti. We specialize in organizing cargo transportation between Georgia, Armenia and Azerbaijan, ensuring speed, cargo safety and operational transparency.',
+                'about.trucks': 'trucks',
+                'about.countries': 'countries of operation',
+                'about.tons': 'tons of cargo',
+                'services.title': 'Our Services',
+                'services.subtitle': 'Comprehensive logistics solutions for your business',
+                'services.containers.title': 'Container Transportation',
+                'services.containers.description': '20-foot and 40-foot containers with full support',
+                'services.express.title': 'Express Delivery',
+                'services.express.description': 'Urgent transportation on fixed routes',
+                'services.dangerous.title': 'Dangerous Goods',
+                'services.dangerous.description': 'ADR cargo transportation with full compliance',
+                'routes.title': 'Our Routes',
+                'routes.subtitle': 'Regular flights on main directions',
+                'routes.georgia_armenia': 'Georgia → Armenia',
+                'routes.armenia_georgia': 'Armenia → Georgia',
+                'routes.georgia_azerbaijan': 'Georgia → Azerbaijan',
+                'routes.azerbaijan_georgia': 'Azerbaijan → Georgia',
+                'team.title': 'Our Team',
+                'team.subtitle': 'Professionals with years of experience',
+                'team.director': 'Director',
+                'team.director_desc': 'Company founder, tariff management and strategic development',
+                'team.manager': 'Chief Manager',
+                'team.manager_desc': 'Document processing, customs, transportation coordination, finance',
+                'team.assistant': 'Assistant Manager',
+                'team.assistant_desc': 'Fleet technical condition, driver support, vehicle registration',
+                'contact.title': 'Contacts',
+                'contact.subtitle': 'Contact us for shipping cost calculation',
+                'contact.info': 'Contact Information',
+                'contact.address': 'Address:',
+                'contact.address_full': 'Georgia, Poti, 4400, Agmashenebeli St No 47, 2nd floor',
+                'contact.hours': 'Working Hours:',
+                'contact.hours_full': 'Mon-Fri: 9:00-18:00, Sat: 10:00-15:00',
+                'contact.clients': 'Our Clients:',
+                'contact.form_title': 'Send Inquiry',
+                'contact.name': 'Name:',
+                'contact.phone': 'Phone:',
+                'contact.message': 'Message:',
+                'contact.send': 'Send Inquiry',
+                'footer.description': 'Your reliable logistics partner in the Caucasus',
+                'footer.quick_links': 'Quick Links',
+                'footer.contact': 'Contacts',
+                'footer.rights': 'All rights reserved.'
+            },
+            ka: {
+                'nav.about': 'ჩვენ შესახებ',
+                'nav.services': 'სერვისები',
+                'nav.routes': 'მარშრუტები',
+                'nav.team': 'გუნდი',
+                'nav.contact': 'კონტაქტი',
+                'hero.title': 'საიმედო ლოჯისტიკური გადაწყვეტები კავკასიაში',
+                'hero.subtitle': 'სწრაფი და უსაფრთხო სატვირთო გადაზიდვები საქართველოს, სომხეთსა და აზერბაიჯანს შორის',
+                'hero.cta': 'დაგვიკავშირდით',
+                'about.title': 'MCEL-ის შესახებ',
+                'about.subtitle': 'თქვენი საიმედო ლოჯისტიკური პარტნიორი 2022 წლიდან',
+                'about.vision': 'ჩვენი ხედვა',
+                'about.description': 'Middle Corridor Express Logistics (MCEL) — ქართული ლოჯისტიკური კომპანიაა ოფისით ფოთში. ჩვენ სპეციალიზირებულნი ვართ სატვირთო გადაზიდვების ორგანიზებაში საქართველოს, სომხეთსა და აზერბაიჯანს შორის, უზრუნველყოფთ სიჩქარეს, ტვირთის უსაფრთხოებას და ოპერაციების გამჭვირვალობას.',
+                'about.trucks': 'სატვირთო მანქანა',
+                'about.countries': 'სამუშაო ქვეყნები',
+                'about.tons': 'ტონა ტვირთი',
+                'services.title': 'ჩვენი სერვისები',
+                'services.subtitle': 'კომპლექსური ლოჯისტიკური გადაწყვეტები თქვენი ბიზნესისთვის',
+                'services.containers.title': 'კონტეინერების გადაზიდვა',
+                'services.containers.description': '20-ფუტიანი და 40-ფუტიანი კონტეინერები სრული მხარდაჭერით',
+                'services.express.title': 'ექსპრეს მიწოდება',
+                'services.express.description': 'სასწრაფო გადაზიდვები ფიქსირებულ მარშრუტებზე',
+                'services.dangerous.title': 'საშიში ტვირთები',
+                'services.dangerous.description': 'ADR ტვირთების გადაზიდვა სტანდარტების სრული დაცვით',
+                'routes.title': 'ჩვენი მარშრუტები',
+                'routes.subtitle': 'რეგულარული რეისები ძირითადი მიმართულებებით',
+                'routes.georgia_armenia': 'საქართველო → სომხეთი',
+                'routes.armenia_georgia': 'სომხეთი → საქართველო',
+                'routes.georgia_azerbaijan': 'საქართველო → აზერბაიჯანი',
+                'routes.azerbaijan_georgia': 'აზერბაიჯანი → საქართველო',
+                'team.title': 'ჩვენი გუნდი',
+                'team.subtitle': 'პროფესიონალები მრავალწლიანი გამოცდილებით',
+                'team.director': 'დირექტორი',
+                'team.director_desc': 'კომპანიის დამფუძნებელი, ტარიფების მენეჯმენტი და სტრატეგიული განვითარება',
+                'team.manager': 'მთავარი მენეჯერი',
+                'team.manager_desc': 'დოკუმენტაციის მომზადება, საბაჟო, გადაზიდვების კოორდინაცია, ფინანსები',
+                'team.assistant': 'მენეჯერის ასისტენტი',
+                'team.assistant_desc': 'ავტოპარკის ტექნიკური მდგომარეობა, მძღოლების მხარდაჭერა, ავტომობილების რეგისტრაცია',
+                'contact.title': 'კონტაქტი',
+                'contact.subtitle': 'დაგვიკავშირდით გადაზიდვის ღირებულების გამოსათვლელად',
+                'contact.info': 'საკონტაქტო ინფორმაცია',
+                'contact.address': 'მისამართი:',
+                'contact.address_full': 'საქართველო, ფოთი, 4400, აგმაშენებელის ქ. №47, მე-2 სართული',
+                'contact.hours': 'სამუშაო საათები:',
+                'contact.hours_full': 'ორშ-პარ: 9:00-18:00, შაბ: 10:00-15:00',
+                'contact.clients': 'ჩვენი კლიენტები:',
+                'contact.form_title': 'გაგზავნეთ მოთხოვნა',
+                'contact.name': 'სახელი:',
+                'contact.phone': 'ტელეფონი:',
+                'contact.message': 'შეტყობინება:',
+                'contact.send': 'მოთხოვნის გაგზავნა',
+                'footer.description': 'თქვენი საიმედო ლოჯისტიკური პარტნიორი კავკასიაში',
+                'footer.quick_links': 'სწრაფი ბმულები',
+                'footer.contact': 'კონტაქტი',
+                'footer.rights': 'ყველა უფლება დაცულია.'
+            }
+        };
+
+        // Language switching
+        document.querySelectorAll('.lang-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const lang = button.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+
+        function switchLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Mobile menu
+        document.querySelector('.mobile-menu').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            // Показываем загрузку
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+            
+            // Formspree автоматически обработает форму
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
